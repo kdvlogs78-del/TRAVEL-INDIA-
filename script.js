@@ -207,15 +207,37 @@ function updateActiveNav() {
 }
 
 // ─── HAMBURGER ──────────────────────────────────────────────────
-document.getElementById('hamburger').addEventListener('click', function () {
-  this.classList.toggle('open');
-  document.getElementById('navLinks').classList.toggle('open');
+// ─── HAMBURGER + MOBILE AUTH BUTTONS ────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+function injectMobileAuthButtons() {
+  if (navLinks.querySelector('.nav-mobile-auth-wrap')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'nav-mobile-auth-wrap';
+  wrap.id = 'navMobileAuth';
+  wrap.innerHTML = `
+    <button class="btn-nav-login" onclick="closeMobileNav();openModal('loginModal')">Login</button>
+    <button class="btn-nav-signup" onclick="closeMobileNav();openModal('signupModal')">Sign Up ✦</button>
+  `;
+  navLinks.appendChild(wrap);
+}
+
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  navLinks.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', function () {
+  const isOpen = this.classList.toggle('open');
+  navLinks.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  if (isOpen) injectMobileAuthButtons();
 });
+
 document.querySelectorAll('.nav-link').forEach(l => {
-  l.addEventListener('click', () => {
-    document.getElementById('hamburger').classList.remove('open');
-    document.getElementById('navLinks').classList.remove('open');
-  });
+  l.addEventListener('click', () => closeMobileNav());
 });
 
 // ─── SCROLL REVEAL ──────────────────────────────────────────────
@@ -829,19 +851,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function refreshNavAuth() {
   const navActions = document.getElementById('navActions');
-  if (!navActions) return;
+  const mobileAuth = document.getElementById('navMobileAuth');
+
   if (currentUser) {
     const initials = ((currentUser.first || '?')[0] + (currentUser.last || '?')[0]).toUpperCase();
-    navActions.innerHTML = `
+    const loggedInHTML = `
       <div class="nav-user-badge">
         <div class="nav-user-avatar">${initials}</div>
         <span>${currentUser.first}</span>
         <button style="background:none;border:none;color:var(--text-dim);font-size:.8rem;cursor:pointer;margin-left:.3rem;" onclick="logoutUser()">↩ Out</button>
       </div>`;
+    if (navActions) navActions.innerHTML = loggedInHTML;
+    if (mobileAuth) mobileAuth.innerHTML = loggedInHTML;
   } else {
-    navActions.innerHTML = `
+    const loggedOutHTML = `
       <button class="btn-nav-login" onclick="openModal('loginModal')">Login</button>
       <button class="btn-nav-signup" onclick="openModal('signupModal')">Sign Up ✦</button>`;
+    if (navActions) navActions.innerHTML = loggedOutHTML;
+    if (mobileAuth) mobileAuth.innerHTML = loggedOutHTML;
   }
 }
 
