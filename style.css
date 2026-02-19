@@ -753,3 +753,448 @@ select option { background:var(--bg-2); }
   .btn-primary, .btn-ghost, .auth-submit,
   .btn-generate-gradient { min-height: 48px; }
 }
+
+/* ══════════════════════════════════════════════
+   MOBILE OPTIMIZATION PATCH — FULL PHONE FIX
+   Fixes: nav mobile menu, buttons, map panel,
+   planner form, chatbot, city page, modals
+   ══════════════════════════════════════════════ */
+
+/* ── Mobile Nav: show actions inside open menu ── */
+@media (max-width:900px) {
+  .nav-links.open {
+    padding-top: calc(80px + var(--safe-top));
+    gap: 0;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+  .nav-links.open .nav-link {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(254,250,205,0.06);
+  }
+  /* Auth buttons inside mobile nav menu */
+  .nav-links.open::after {
+    content: '';
+    display: block;
+    flex: 1;
+  }
+
+  /* Nav actions: stack inside hamburger menu on mobile */
+  .nav-mobile-auth {
+    display: flex !important;
+    flex-direction: column;
+    gap: .75rem;
+    padding: 1.5rem 2rem 2rem;
+    width: 100%;
+  }
+  .nav-mobile-auth .btn-nav-login,
+  .nav-mobile-auth .btn-nav-signup {
+    width: 100%;
+    padding: .85rem;
+    font-size: .95rem;
+    text-align: center;
+    justify-content: center;
+    min-height: 48px;
+    border-radius: 10px;
+  }
+
+  /* Hamburger — keep visible */
+  .hamburger { display: flex !important; }
+
+  /* Map section — stack properly */
+  .india-map-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  .india-map-container { height: 340px; }
+  .india-map-panel {
+    min-height: 240px;
+    padding: 1.25rem;
+  }
+
+  /* Map result actions — full width stacked */
+  .map-result-actions {
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .btn-map-chat, .btn-map-plan {
+    width: 100%;
+    min-height: 44px;
+    font-size: .9rem;
+    padding: .75rem 1rem;
+  }
+
+  /* Hint chips — bigger touch targets */
+  .map-hint-chips span {
+    padding: .5rem 1rem;
+    font-size: .82rem;
+  }
+}
+
+/* ── Mobile: full overhaul ≤ 600px ── */
+@media (max-width: 600px) {
+
+  /* ── Navbar ── */
+  .nav-container { padding: 0 .85rem; gap: .5rem; }
+  .nav-logo { font-size: 1rem; gap: .35rem; }
+  .nav-logo img.logo-img { width: 26px; height: 26px; }
+
+  /* Full-screen nav overlay */
+  .nav-links.open {
+    padding-top: calc(70px + var(--safe-top));
+    gap: 0;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .nav-links.open .nav-link {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    width: 100%;
+    text-align: center;
+    min-height: 54px;
+  }
+  .nav-actions { display: none; }
+
+  /* ── Hero ── */
+  .hero { min-height: 100svh; }
+  .hero-content {
+    padding: 4.5rem 1rem 3rem;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-end;
+  }
+  .hero-headline { font-size: clamp(2.6rem, 13vw, 4.5rem); }
+  .hero-sub { font-size: .88rem; max-width: 100%; }
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    gap: .6rem;
+    margin-top: .75rem;
+  }
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    padding: .95rem 1rem;
+    min-height: 52px;
+    font-size: .95rem;
+    border-radius: 10px;
+  }
+
+  /* ── Stats ── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+  }
+  .stat-item { padding: .85rem .5rem; }
+  .stat-item strong { font-size: 1.55rem; }
+  .stat-divider { display: none; }
+
+  /* ── Map Section ── */
+  .india-map-layout { padding: 0 .85rem; gap: .85rem; }
+  .india-map-container { height: 260px; }
+  .india-map-panel { padding: 1rem; min-height: 200px; }
+  .map-panel-default h3 { font-size: 1.1rem; }
+  .map-panel-default p { font-size: .82rem; }
+  .map-hint-chips { gap: .4rem; margin-top: .85rem; }
+  .map-hint-chips span {
+    padding: .45rem .85rem;
+    font-size: .78rem;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .map-result-header h3 { font-size: 1.1rem; }
+  .map-result-content { font-size: .82rem; }
+  .map-result-actions { flex-direction: column; gap: .5rem; }
+  .btn-map-chat, .btn-map-plan {
+    width: 100%;
+    min-height: 46px;
+    font-size: .88rem;
+    padding: .72rem 1rem;
+  }
+
+  /* ── Planner ── */
+  .planner-card { padding: 0 .85rem; }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: .85rem;
+    margin-bottom: .85rem;
+  }
+  .form-field input, .form-field select {
+    padding: .85rem 1rem;
+    font-size: 1rem;
+    min-height: 50px;
+    border-radius: 10px;
+  }
+  .travelers-field { margin-bottom: 1rem; }
+  .travelers-control { padding: .85rem 1rem; border-radius: 10px; }
+  .trav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+    min-width: 40px;
+  }
+  #travCount { font-size: 1.2rem; min-width: 32px; }
+  .btn-generate-gradient {
+    padding: 1.05rem;
+    font-size: 1rem;
+    min-height: 54px;
+    border-radius: 10px;
+  }
+
+  /* ── Planner results ── */
+  .results-cards-grid {
+    grid-template-columns: 1fr;
+    gap: .85rem;
+  }
+  .results-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .65rem;
+  }
+  .btn-reset {
+    width: 100%;
+    text-align: center;
+    padding: .65rem 1rem;
+    min-height: 44px;
+  }
+
+  /* ── Places ── */
+  .places-grid {
+    grid-template-columns: 1fr;
+    padding: 0 .85rem;
+    gap: .85rem;
+  }
+  .place-img-wrap { height: 210px; }
+  .place-hover-cta { opacity: 1 !important; transform: translateY(0) !important; }
+  .place-info { padding: .9rem; }
+  .place-info h3 { font-size: 1.05rem; }
+
+  /* ── Features ── */
+  .features-grid {
+    grid-template-columns: 1fr;
+    padding: 0 .85rem;
+    gap: .75rem;
+  }
+  .feature-card { padding: 1.25rem; }
+
+  /* ── About ── */
+  .about-inner { padding: 0 .85rem; gap: 1.75rem; }
+  .about-img-grid img { height: 120px; }
+  .about-img-grid img:nth-child(2),
+  .about-img-grid img:nth-child(4) { margin-top: 0; }
+
+  /* ── Contact ── */
+  .contact-inner {
+    padding: 0 .85rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .form-input {
+    padding: .85rem 1rem;
+    font-size: 1rem;
+    min-height: 50px;
+  }
+  .form-textarea { min-height: 110px; }
+  button[type="submit"].btn-primary { min-height: 52px; font-size: 1rem; }
+
+  /* ── Footer ── */
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem .85rem 1.5rem;
+  }
+  .footer-bottom { padding: 1rem .85rem; }
+
+  /* ── City Page ── */
+  #cityPage { position: fixed; inset: 0; z-index: 2000; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .city-hero { height: 42vh; min-height: 240px; }
+  .city-hero-content { padding: 1.25rem .85rem; }
+  .city-hero-title { font-size: clamp(1.9rem, 11vw, 2.8rem); }
+  .city-hero-tagline { font-size: .85rem; margin-bottom: 1rem; }
+  .city-back-btn {
+    padding: .55rem .95rem;
+    font-size: .82rem;
+    min-height: 40px;
+  }
+  .city-plan-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+    font-size: .9rem;
+  }
+  .city-tabs-wrap { padding: 1.25rem .85rem; }
+  .city-tabs { gap: .2rem; padding-bottom: 0; }
+  .city-tab {
+    padding: .55rem .75rem;
+    font-size: .78rem;
+    min-height: 40px;
+  }
+  .city-cards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: .65rem;
+  }
+  .city-info-card { padding: .9rem; }
+  .city-info-card h4 { font-size: .88rem; }
+  .city-info-card p { font-size: .78rem; }
+
+  /* ── Chatbot ── */
+  .chatbot-container {
+    right: calc(.85rem + var(--safe-right));
+    bottom: calc(1rem + var(--safe-bottom));
+  }
+  .chatbot-btn {
+    padding: .8rem;
+    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    justify-content: center;
+  }
+  .chatbot-btn span:not(.chatbot-icon):not(.chat-notif) { display: none; }
+  .chatbot-icon { font-size: 1.45rem; }
+  .chatbot-window {
+    width: calc(100vw - 1.5rem);
+    max-width: none;
+    height: calc(100svh - 130px);
+    max-height: 560px;
+    right: -.1rem;
+    border-radius: 16px;
+  }
+  .chat-header { padding: .85rem 1rem; }
+  .chat-header-info h4 { font-size: .85rem; }
+  .chat-messages { padding: .85rem; }
+  .chat-input-area { padding: .55rem .8rem .8rem; }
+  .chat-suggestions {
+    gap: .3rem;
+    margin-bottom: .45rem;
+    flex-wrap: wrap;
+  }
+  .chat-suggestions button {
+    padding: .32rem .65rem;
+    font-size: .7rem;
+    min-height: 32px;
+  }
+  .chat-input-row { gap: .4rem; }
+  #chatInput {
+    padding: .65rem .9rem;
+    font-size: .9rem;
+    min-height: 44px;
+  }
+  .chat-send {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+  .msg-content { font-size: .82rem; line-height: 1.6; }
+
+  /* ── Auth Modals ── */
+  .auth-modal-backdrop {
+    padding: .5rem;
+    align-items: flex-end;
+  }
+  .auth-modal {
+    border-radius: 20px 20px 16px 16px;
+    max-height: 92svh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .auth-modal-inner { padding: 1.75rem 1.1rem 1.5rem; }
+  .auth-logo-wrap h2 { font-size: 1.35rem; }
+  .auth-logo-wrap p { font-size: .82rem; }
+  .auth-field label { font-size: .82rem; }
+  .auth-input {
+    padding: .8rem 1rem .8rem 2.5rem;
+    font-size: .95rem;
+    min-height: 50px;
+  }
+  .auth-submit { min-height: 50px; font-size: .95rem; }
+  .auth-row { grid-template-columns: 1fr; gap: .6rem; }
+  .auth-social { flex-direction: column; gap: .55rem; }
+  .auth-social-btn { min-height: 46px; font-size: .88rem; }
+
+  /* ── PWA Install Banner ── */
+  .install-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem .85rem calc(1rem + var(--safe-bottom));
+    gap: .65rem;
+  }
+  .install-actions { margin-left: 0; width: 100%; justify-content: center; }
+  .btn-install, .btn-dismiss {
+    padding: .6rem 1.25rem;
+    min-height: 42px;
+    font-size: .88rem;
+  }
+
+  /* ── Toast ── */
+  .toast {
+    bottom: 5rem;
+    font-size: .8rem;
+    text-align: center;
+    white-space: normal;
+    max-width: calc(100vw - 2rem);
+  }
+
+  /* ── Section headers ── */
+  .section-header-wrap { padding: 0 .85rem; margin-bottom: 1.75rem; }
+  .section-title-main { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+  .section-sub-text { font-size: .85rem; }
+}
+
+/* ── Extra-small 380px ── */
+@media (max-width: 380px) {
+  .hero-headline { font-size: clamp(2.3rem, 14vw, 3rem); }
+  .city-cards-grid { grid-template-columns: 1fr; }
+  .chatbot-window { height: calc(100svh - 110px); }
+  .form-field input, .form-field select { font-size: .9rem; }
+}
+
+/* ── Universal touch targets on mobile ── */
+@media (pointer: coarse) {
+  .place-card { cursor: pointer; -webkit-tap-highlight-color: rgba(254,250,205,0.1); }
+  .btn-primary, .btn-ghost, .btn-generate-gradient,
+  .auth-submit, .btn-map-plan, .btn-map-chat { min-height: 50px; }
+  .nav-link, .city-tab { min-height: 46px; }
+  .trav-btn, .chat-send { min-height: 44px; min-width: 44px; }
+  .map-hint-chips span { min-height: 38px; display: inline-flex; align-items: center; }
+  button { -webkit-tap-highlight-color: transparent; }
+  
+  /* Ensure place cards are tappable */
+  .place-hover-cta { opacity: 1 !important; transform: translateY(0) !important; }
+}
+
+/* ── Smooth scroll on iOS ── */
+#cityPage, .auth-modal, .chat-messages {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Nav Mobile Auth Buttons shown inside hamburger menu ── */
+.nav-mobile-auth-wrap {
+  width: 100%;
+  padding: 1rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  border-top: 1px solid rgba(254,250,205,0.1);
+  margin-top: .5rem;
+}
+.nav-mobile-auth-wrap .btn-nav-login,
+.nav-mobile-auth-wrap .btn-nav-signup {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  padding: .9rem;
+  min-height: 50px;
+  font-size: .95rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
